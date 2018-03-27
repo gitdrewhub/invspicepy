@@ -148,3 +148,8 @@ while tpNextF < tpPrevF:
     fan+=1
     line = 'toPrevF = ' + str(tpPrevF) + ' toNextF = ' + str(toNextF) + '\n'
     f.write(line)
+
+
+# Problem: while loop (F) won't run a 2nd time. >>>>>   [tpNextF<tpPrevF]
+# 0.999 < 6.071 e -10
+# Compare data types
