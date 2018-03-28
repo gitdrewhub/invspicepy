@@ -128,9 +128,35 @@ tpNextN=0.999
 tpPrevN=1
 tpNextF=0.999
 tpPrevF=1
-f=open('comments.txt','w')
+
+
+
+
+f = open('comments.txt', 'w')
+N = 1
+tpPrevF = getTPprev()
+while tpNextN < tpPrevN:
+    tpPrevN = tpNextN
+
+    varyN(fan, N + 2, 'InvChain1.sp', 'InvChain2.sp')
+    N += 2
+
+    shutil.copyfile('InvChain2.sp', 'InvChain1.sp')
+
+    tpNextN = getTPnext()
+    if N > 15:
+        break
+
+toNextF = getTPnext()
+fan += 1
+line = 'toPrevF = ' + str(tpPrevF) + ' toNextF = ' + str(toNextF) + '\n'
+f.write(line)
+f.close()
+
 while tpNextF < tpPrevF:
+    f = open('comments.txt', 'w')
     N=1
+    fan += 1
     tpPrevF=tpNextF
     while tpNextN < tpPrevN:
         tpPrevN = tpNextN
@@ -144,10 +170,11 @@ while tpNextF < tpPrevF:
         if N>15:
             break
 
-    toNextF = tpNextN
-    fan+=1
+    toNextF = getTPnext()
+
     line = 'toPrevF = ' + str(tpPrevF) + ' toNextF = ' + str(toNextF) + '\n'
     f.write(line)
+    f.close()
 
 
 # Problem: while loop (F) won't run a 2nd time. >>>>>   [tpNextF<tpPrevF]
