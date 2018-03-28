@@ -121,13 +121,14 @@ varyN(fan, N, 'InvChain3.sp', 'InvChain1.sp')
 tpNext = getTPnext()
 tpPrev = tpOriginal
 '''
-N=1
-fan=1
+Nfinal=1
+fan=2
 
 tpNextN=0.999
 tpPrevN=1
 tpNextF=0.999
 tpPrevF=1
+
 
 
 
@@ -147,12 +148,14 @@ while tpNextN < tpPrevN:
     if N > 15:
         break
 
-toNextF = getTPnext()
+tpNextF = getTPnext()
 fan += 1
-line = 'toPrevF = ' + str(tpPrevF) + ' toNextF = ' + str(toNextF) + '\n'
+line = 'Initial while: tpPrevF = ' + str(tpPrevF) + ' tpNextF = ' + str(tpNextF) + '\n'
 f.write(line)
 f.close()
 
+tpNextN=0.999
+tpPrevN=1
 while tpNextF < tpPrevF:
     f = open('comments.txt', 'w')
     N=1
@@ -167,14 +170,19 @@ while tpNextF < tpPrevF:
         shutil.copyfile('InvChain2.sp', 'InvChain1.sp')
 
         tpNextN = getTPnext()
-        if N>15:
+        if N>100:
             break
 
-    toNextF = getTPnext()
+        line='N='+str(N)+'\n'
+        f.write(line)
 
-    line = 'toPrevF = ' + str(tpPrevF) + ' toNextF = ' + str(toNextF) + '\n'
+    tpNextF = getTPnext()
+
+    line = str(fan-1)+ 'Iteration While: tpPrevF = ' + str(tpPrevF) + ' tpNextF = ' + str(tpNextF) + '\n'
     f.write(line)
     f.close()
+
+varyN(fan - 1, N-2, 'InvChain2.sp', 'InvChain1.sp')
 
 
 # Problem: while loop (F) won't run a 2nd time. >>>>>   [tpNextF<tpPrevF]
