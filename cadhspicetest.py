@@ -82,48 +82,16 @@ def varyN(beta, index, invFile1, invFile2):
     f.close()
     f1.close()
 
-
-R = 50
+#Setting up files
 shutil.copyfile('InvChain.sp', 'InvChain1.sp')
 shutil.copyfile('InvChain1.sp', 'InvChain2.sp')
 shutil.copyfile('InvChain1.sp', 'InvChain3.sp')
 
-#tpPrev = getTPprev()
-#tpOriginal = tpPrev
-
-#########First Iteration
-#varyfan('InvChain1.sp', 'InvChain2.sp')
-#shutil.copyfile('InvChain2.sp', 'InvChain1.sp')
-####################
-#tpNext = getTPnext()
 
 
 
-
-'''
-
-
-
-
-
-
-##while loop
-while tpNext < tpPrev:
-    R = varyfan('InvChain1.sp', 'InvChain2.sp')
-    shutil.copyfile('InvChain2.sp', 'InvChain1.sp')
-    tpPrev = tpNext
-    tpNext = getTPnext()
-
-N = math.floor(np.log(R))
-#N = N + (N % 2)
-fan = math.floor(R ** (1 / N))
-varyN(fan, N, 'InvChain3.sp', 'InvChain1.sp')
-tpNext = getTPnext()
-tpPrev = tpOriginal
-'''
-Nfinal=1
-fan=2
-
+#Initializing values to enter While Loop at least once
+#---Emulating a Do-While loop
 tpNextN=0.999
 tpPrevN=1
 tpNextF=0.999
@@ -133,8 +101,11 @@ tpPrevF=1
 
 
 
-f = open('comments.txt', 'w')
+#f = open('comments.txt', 'w')
+
+#Finding initial tpNext and tpPrev values
 N = 1
+fan=2
 tpPrevF = getTPprev()
 while tpNextN < tpPrevN:
     tpPrevN = tpNextN
@@ -151,16 +122,22 @@ while tpNextN < tpPrevN:
 tpNextF = getTPnext()
 fan += 1
 line = 'Initial while: tpPrevF = ' + str(tpPrevF) + ' tpNextF = ' + str(tpNextF) + '\n'
-f.write(line)
-f.close()
+#f.write(line)
+#f.close()
 
+
+#Initializing values to enter While Loop at least once
+#---Emulating a Do-While loop
 tpNextN=0.999
 tpPrevN=1
+
+#While loop to find correct fanout
 while tpNextF < tpPrevF:
-    f = open('comments.txt', 'w')
+    #f = open('comments.txt', 'w')
     N=1
     fan += 1
     tpPrevF=tpNextF
+    #While loop to find correct number of stages
     while tpNextN < tpPrevN:
         tpPrevN = tpNextN
 
@@ -178,13 +155,9 @@ while tpNextF < tpPrevF:
 
     tpNextF = getTPnext()
 
-    line = str(fan-1)+ 'Iteration While: tpPrevF = ' + str(tpPrevF) + ' tpNextF = ' + str(tpNextF) + '\n'
-    f.write(line)
-    f.close()
+    #line = str(fan)+ 'Iteration While: tpPrevF = ' + str(tpPrevF) + ' tpNextF = ' + str(tpNextF) + '\n'
+    #f.write(line)
+    #f.close()
 
-varyN(fan - 1, N-2, 'InvChain2.sp', 'InvChain1.sp')
+varyN(fan, N-2, 'InvChain2.sp', 'InvChain1.sp')
 
-
-# Problem: while loop (F) won't run a 2nd time. >>>>>   [tpNextF<tpPrevF]
-# 0.999 < 6.071 e -10
-# Compare data types
